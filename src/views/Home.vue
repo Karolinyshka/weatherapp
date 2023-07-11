@@ -10,14 +10,12 @@
 <router-view v-bind:cities="cities"/>
 <script>
 import axios from "axios"
-import AddCity from "@/views/components/AddCity.vue";
 import db from "@/firebase/firebaseinit"
 import { collection,onSnapshot} from "firebase/firestore";
 import City from "@/views/components/City.vue";
 export default {
   components:{
     City,
-    AddCity,
   },
   name: 'weather',
   data(){

@@ -6,7 +6,7 @@
       <v-toolbar-title>WEATHER APP</v-toolbar-title>
       <v-col cols="3" class="mr-2">
         <v-text-field
-            v-model="search"
+            v-model="city"
             @keyup.enter="addCity"
             class="pt-5 mr-10 field-center"
             placeholder="AddCity"
@@ -50,16 +50,26 @@ let drawer = ref(null)
 </script>
 
 <script>
+
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+import db from "@/firebase/firebaseinit";
+import axios from "axios";
+
 export default {
   data() {
     return {
+      city: "",
+      APIkey: "d410796959d43e43284d166783af3b4b",
       search: null,
       drawer: true,
       links: [
         {
           icon: "mdi-calendar-blank",
           text: "Home",
-          route: "/" },
+          route: "/"
+        },
         {
           icon: "mdi-calendar-blank",
           text: "Daily Weather",
@@ -68,10 +78,33 @@ export default {
         {
           icon: "mdi-clock-time-five-outline",
           text: "Hourly Weather",
-          route: "/hourlyWeather" },
+          route: "/hourlyWeather"
+        },
       ],
     };
   },
+  methods: {
+    addCity: async function () {
+      if (this.city === "") {
+        alert("Field is empty");
+      } else {
+        const getWeather = await axios.get(`https://api.openweathermap.org/data/2.5/weather?units=metric&q=${this.city}&appid=${this.APIkey}`);
+        const data = await getWeather.data;
+        console.log(data);
+        const db = firebase.firestore();
+        db.collection( "cities")
+             .add(
+             {
+               city:this.city,
+               currentWeather:data,
+             }).then(()=>{
+               this.$emit("close-modal");
+         });
+      }
+    },
+  },
+
+  props: ["cities"],
 }
 </script>
 <style>

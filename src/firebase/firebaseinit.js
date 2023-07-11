@@ -1,6 +1,9 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from 'firebase/firestore'
 
+import 'firebase/compat/firestore';
+import firebase from "firebase/compat/app";
+
 const firebaseConfig = {
     apiKey: "AIzaSyDfKWK8JaGsUJvalD-_3T3CkrnlHH1LJm0",
     authDomain: "weatherapp-a8623.firebaseapp.com",
@@ -12,7 +15,9 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app)
+//const app = initializeApp(firebaseConfig);
+//const db = getFirestore(app)
+firebase.initializeApp(firebaseConfig);
+let db = firebase.firestore()
 
 export default db

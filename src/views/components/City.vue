@@ -8,7 +8,7 @@
       </v-col>
     </v-row>
   </v-card-text>-->
-  <v-container class="city">
+  <v-container @click="gotoWeather" class="city">
 <span>{{this.city.name}}</span>
   <div class="weather">
    <span>{{Math.round(city.main.temp)}}&deg;</span>
@@ -29,6 +29,14 @@
 export default {
   name:"city",
   props:["city"],
+  methods:{
+    gotoWeather(e){
+      if (e.target ===this.$refs){
+      }else{
+        this.$router.push({name:"Weather",params:{city:this.city}});
+      }
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

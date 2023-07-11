@@ -33,6 +33,7 @@
 export default {
   name: "DailyPage",
   props:["cities"],
+
   data() {
     return {
     };
